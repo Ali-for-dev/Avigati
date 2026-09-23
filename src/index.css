@@ -1,0 +1,382 @@
+/* src/index.css — Avigati Design System v2 */
+
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Design Tokens ── */
+:root {
+  /* Backgrounds */
+  --bg:       #010918;
+  --bg2:      #020C22;
+  --bg3:      #040F2A;
+
+  /* KPMG Blue family — deep + authoritative */
+  --blue:     #00338D;   /* KPMG deep blue (primary) */
+  --blue-md:  #0050B3;   /* medium blue (hovers) */
+  --blue-lt:  #1A73E8;   /* lighter blue (links/accents) */
+  --cyan:     #00B8D9;   /* bright cyan (sparingly, highlights) */
+
+  /* Text */
+  --white:    #F0F5FF;   /* pure near-white */
+  --muted:    #4D6B99;   /* muted blue-grey body text */
+  --dim:      #2A426B;   /* very muted, dividers labels */
+
+  /* Typography — Inter only */
+  --ff-body:    'Inter', system-ui, sans-serif;
+}
+
+/* ── Light mode tokens ─────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:       #F4F8FF;
+  --bg2:      #EBF1FF;
+  --bg3:      #E0EAFF;
+
+  --blue:     #00338D;
+  --blue-md:  #0050B3;
+  --blue-lt:  #1A73E8;
+  --cyan:     #0090AA;   /* darkened for contrast on light bg */
+
+  --white:    #00338D;   /* body text = navy */
+  --muted:    #3A5A88;
+  --dim:      #7A99BB;
+}
+
+/* ── Light mode tokens — White + Cyan ──────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:       #FFFFFF;
+  --bg2:      #F5FAFF;
+  --bg3:      #EBF6FF;
+
+  /* Cyan as the one accent — kept on decorative elements only */
+  --blue:     #0099B8;
+  --blue-md:  #007A96;
+  --blue-lt:  #00B8D9;
+  --cyan:     #00B8D9;
+
+  /* Dark readable text on white — NOT navy */
+  --white:    #0A1628;
+  --muted:    #4A6070;
+  --dim:      #8AAABB;
+}
+
+/* ── Hero in light mode — photo bg stays, scrim adjusted ── */
+[data-theme="light"] #hero-sticky::before {
+  background: linear-gradient(
+    160deg,
+    rgba(10, 22, 40, 0.60) 0%,
+    rgba(10, 22, 40, 0.30) 55%,
+    rgba(10, 22, 40, 0.65) 100%
+  );
+}
+/* Hero text stays white — dark scrim ensures contrast */
+/* No overrides needed on hero text in light mode */
+
+/* ── Stats bar ── */
+[data-theme="light"] .stats-bar {
+  background: rgba(255, 255, 255, 0.85);
+  border-top-color: rgba(0, 184, 217, 0.2);
+}
+[data-theme="light"] .stat-val   { color: #0A1628; }
+[data-theme="light"] .stat-label { color: #4A6070; }
+[data-theme="light"] .stat-plus  { color: #00B8D9; }
+[data-theme="light"] .stat-sep   { background: rgba(0, 184, 217, 0.2); }
+
+/* ── Scroll cue ── */
+[data-theme="light"] .scroll-thumb     { background: #00B8D9; }
+[data-theme="light"] .scroll-track     { background: rgba(0, 184, 217, 0.15); }
+[data-theme="light"] .scroll-cue span  { color: #8AAABB; }
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html  { font-size: 16px; scroll-behavior: smooth; }
+body  {
+  font-family: var(--ff-body);
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a      { text-decoration: none; color: inherit; }
+ul     { list-style: none; }
+button { font-family: inherit; }
+img, canvas { display: block; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue-lt); }
+
+/* ── Selection ── */
+::selection { background: var(--blue); color: #fff; }
+
+/* ── Focus ── */
+:focus-visible { outline: 1px solid var(--cyan); outline-offset: 3px; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HERO — SCROLL STAGE (300vh)
+   200vh of extra scroll drives the HeroShadow SVG translateY
+───────────────────────────────────────────────────────────────────────────── */
+#scroll-stage { position: relative; height: 300vh; }
+
+#hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: url('/hero-bg.jpg') center 40% / cover no-repeat;
+}
+
+/* Scrim: lighter so the photo breathes — just enough for text contrast */
+#hero-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      160deg,
+      rgba(1, 9, 24, 0.75) 0%,
+      rgba(1, 9, 24, 0.38) 55%,
+      rgba(1, 9, 24, 0.72) 100%
+    );
+}
+
+/* Technical grid — very subtle */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 51, 141, .04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 51, 141, .04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
+}
+
+/* ── Hero text ── */
+.hero-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6vw;
+  padding-top: 80px;
+  pointer-events: auto;
+}
+
+.hero-left { max-width: 680px; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-body);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .32em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+/* Small dash before eyebrow */
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--cyan);
+  flex-shrink: 0;
+}
+
+/* Main headline — display font, very large */
+.hero-headline {
+  font-size: clamp(1.4rem, 2.8vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+/* Accent word in headline — cyan colour */
+.hero-headline .accent { color: var(--cyan); }
+
+/* Company name / wordmark — smaller, spaced */
+.hero-wordmark {
+  font-family: var(--ff-body);
+  font-size: clamp(4rem, 10vw, 9.5rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: .92;
+  margin-bottom: 24px;
+  background: linear-gradient(130deg, #FFFFFF 50%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-rule {
+  width: 40px;
+  height: 2px;
+  background: var(--blue-lt);
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: rgba(240, 245, 255, .68);
+  line-height: 1.80;
+  margin-bottom: 40px;
+  max-width: 500px;
+  font-weight: 400;
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* ── Stats bar ── */
+.stats-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: 18px 6vw;
+  border-top: 1px solid rgba(0, 51, 141, .25);
+  background: rgba(1, 9, 24, .72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  pointer-events: auto;
+}
+.stat { display: flex; flex-direction: column; }
+.stat-val {
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1;
+  color: var(--white);
+}
+.stat-plus { color: var(--cyan); }
+.stat-label {
+  font-size: .65rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+.stat-sep {
+  width: 1px;
+  height: 32px;
+  background: rgba(0, 51, 141, .3);
+  margin: 0 40px;
+  flex-shrink: 0;
+}
+
+/* ── Scroll cue ── */
+.scroll-cue {
+  position: absolute;
+  bottom: 86px;
+  right: 6vw;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.scroll-track {
+  width: 1px;
+  height: 52px;
+  background: rgba(0, 184, 217, .18);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-thumb {
+  position: absolute;
+  top: -40%;
+  width: 100%;
+  height: 40%;
+  background: var(--cyan);
+  animation: scrollCue 2s ease-in-out infinite;
+}
+@keyframes scrollCue { 0% { top: -40%; } 100% { top: 140%; } }
+.scroll-cue span {
+  font-size: .62rem;
+  letter-spacing: .24em;
+  color: var(--dim);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-transform: uppercase;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: var(--blue);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 700;
+  font-family: var(--ff-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--blue);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color .3s;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--blue-md);
+  transform: translateX(-101%);
+  transition: transform .35s ease;
+}
+.btn-primary:hover { color: #fff; }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary > * { position: relative; z-index: 1; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--white);
+  font-size: .7rem;
+  font-weight: 700;
+  font-family: var(--ff-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(0, 184, 217, .28);
+  cursor: pointer;
+  transition: border-color .3s, background .3s;
+}
+.btn-ghost:hover {
+  border-color: var(--cyan);
+  background: rgba(0, 184, 217, .07);
+}
+
+/* ── RTL ── */
+[dir="rtl"] .hero-left         { text-align: right; }
+[dir="rtl"] .hero-eyebrow      { flex-direction: row-reverse; }
+[dir="rtl"] .hero-actions      { flex-direction: row-reverse; }
+[dir="rtl"] .scroll-cue        { right: auto; left: 6vw; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .stats-bar    { flex-wrap: wrap; gap: 14px; }
+  .stat-sep     { display: none; }
+  .scroll-cue   { display: none; }
+  .hero-eyebrow::before { display: none; }
+}

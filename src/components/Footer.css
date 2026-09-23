@@ -1,0 +1,86 @@
+/* src/components/Footer.css — KPMG Blue palette */
+footer {
+  position: relative;
+  z-index: 10;
+  background: #030F2A;
+  border-top: 1px solid rgba(0, 145, 218, .08);
+  padding: 60px 0 32px;
+}
+.footer-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  padding: 0 6vw;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.footer-logo {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: .18em;
+  color: #EEF5FF;
+  margin-bottom: 14px;
+}
+.logo-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: #0091DA;
+  margin-left: 3px;
+  vertical-align: super;
+}
+.footer-brand p {
+  font-size: .8rem;
+  color: #4B6E99;
+  line-height: 1.7;
+  max-width: 300px;
+}
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer-nav a {
+  font-size: .8rem;
+  color: #4B6E99;
+  text-decoration: none;
+  transition: color .3s;
+}
+.footer-nav a:hover { color: #0091DA; }
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.footer-legal > span { font-size: .72rem; color: #4B6E99; }
+.legal-links { display: flex; gap: 20px; }
+.legal-links a {
+  font-size: .72rem;
+  color: #4B6E99;
+  text-decoration: none;
+  transition: color .3s;
+}
+.legal-links a:hover { color: #EEF5FF; }
+
+[dir="rtl"] .footer-legal { align-items: flex-start; }
+
+@media (max-width: 768px) {
+  .footer-wrap { grid-template-columns: 1fr; }
+  .footer-legal { align-items: flex-start; }
+  .legal-links { flex-wrap: wrap; }
+}
+
+/* ── Light mode footer ── */
+[data-theme="light"] footer {
+  background: #EBF6FF;
+  border-top-color: rgba(0, 184, 217, 0.2);
+}
+[data-theme="light"] .footer-logo  { color: #0A1628; }
+[data-theme="light"] .footer-brand p { color: #4A6070; }
+[data-theme="light"] .footer-nav a  { color: #4A6070; }
+[data-theme="light"] .footer-nav a:hover { color: #00B8D9; }
+[data-theme="light"] .footer-legal > span { color: #4A6070; }
+[data-theme="light"] .legal-links a { color: #4A6070; }
+[data-theme="light"] .legal-links a:hover { color: #0A1628; }
